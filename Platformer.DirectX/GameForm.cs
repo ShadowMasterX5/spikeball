@@ -110,6 +110,31 @@ namespace Platformer.DirectX
                     _gameEngine.Step(true);
                     break;
             }
+
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    _inputService.HoldControl(ControllerState.Up);
+                    break;
+                case Keys.Down:
+                    _inputService.HoldControl(ControllerState.Down);
+                    break;
+                case Keys.Left:
+                    _inputService.HoldControl(ControllerState.Left);
+                    break;
+                case Keys.Right:
+                    _inputService.HoldControl(ControllerState.Right);
+                    break;
+                case Keys.Z:
+                    _inputService.HoldControl(ControllerState.Jump);
+                    break;
+                case Keys.P:
+                    _gameEngine.Paused = !_gameEngine.Paused;
+                    break;
+                case Keys.Q:
+                    _gameEngine.Step(true);
+                    break;
+            }
         }
 
         /// <summary>
