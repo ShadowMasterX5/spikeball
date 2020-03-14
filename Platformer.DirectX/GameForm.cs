@@ -25,6 +25,7 @@ namespace Platformer.DirectX
     using Engine.Services;
     using Engine.Input;
     using System.IO;
+    using Windows.Gaming.Input;
 
     /// <summary>
     /// The main game window.
