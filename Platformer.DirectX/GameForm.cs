@@ -36,6 +36,12 @@ namespace Platformer.DirectX
         private readonly IGameEngine _gameEngine;
         private readonly IInputService _inputService;
         private readonly Program _prg;
+        public GamepadInput gamepad;
+        
+        public enum GamepadInput
+        {
+            Up, Down, Left, Right, A_Button, B_Button, X_Button, Y_Button, L_Button, R_Button, View_Button, Menu_Button, L_Trigger, R_Trigger, R_Up, R_Down, R_Left, R_Right
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameForm"/> class.
@@ -53,6 +59,8 @@ namespace Platformer.DirectX
             }
 
             InitializeComponent();
+
+            //GamepadInput.Up = Gamepad;
 
             _prg = prg;
             _gameEngine = gameEngine;
