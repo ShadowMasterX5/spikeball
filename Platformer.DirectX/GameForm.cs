@@ -40,6 +40,18 @@ namespace Platformer.DirectX
         private readonly IInputService _inputService;
         private readonly Program _prg;
         public GamepadInput gamepadInput;
+        public GamepadReading reading;
+
+        public struct GamepadReading
+        {
+            double leftStickX;   // returns a value between -1.0 and +1.0
+            double leftStickY;   // returns a value between -1.0 and +1.0
+            double rightStickX; // returns a value between -1.0 and +1.0
+            double rightStickY; // returns a value between -1.0 and +1.0
+            double leftTrigger;  // returns a value between 0.0 and 1.0
+            double rightTrigger; // returns a value between 0.0 and 1.0
+            
+        }
         Gamepad gamepad;
         Timer t = new Timer();
         
@@ -68,7 +80,10 @@ namespace Platformer.DirectX
             Gamepad.GamepadAdded += Gamepad_GamepadAdded;
             Gamepad.GamepadRemoved += Gamepad_GamepadRemoved;
 
-            
+            if (GamepadButtons.A == (reading.Buttons & GamepadButtons.A))
+            {
+                // button A is pressed
+            }
 
             t.Tick += T_Tick;
             t.Interval = 1000;
