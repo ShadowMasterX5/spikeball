@@ -22,6 +22,9 @@ namespace Platformer.DirectX
     using SharpDX.Windows;
     using Engine;
     using System;
+    using System.Diagnostics;
+    using System.Data;
+    using System.Threading.Tasks;
     using Engine.Services;
     using Engine.Input;
     using System.IO;
@@ -36,7 +39,8 @@ namespace Platformer.DirectX
         private readonly IGameEngine _gameEngine;
         private readonly IInputService _inputService;
         private readonly Program _prg;
-        public GamepadInput gamepad;
+        public GamepadInput gamepadInput;
+        Gamepad gamepad;
         
         public enum GamepadInput
         {
@@ -60,11 +64,30 @@ namespace Platformer.DirectX
 
             InitializeComponent();
 
-            //GamepadInput.Up = Gamepad;
+            Gamepad.GamepadAdded += Gamepad_GamepadAdded;
+            Gamepad.GamepadRemoved += Gamepad_GamepadRemoved;
 
             _prg = prg;
             _gameEngine = gameEngine;
             _inputService = _gameEngine.GetService<IInputService>();
+        }
+
+        private void Gamepad_GamepadRemoved(object sender, Gamepad e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Gamepad_GamepadAdded(object sender, Gamepad e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task Log(string txt)
+        {
+            Task t = Task.Run(async () =>
+            {
+                Debug.WriteLine(DateTime.Now.ToShortDateString() + ": " + txt);
+            });
         }
 
         /// <summary>
