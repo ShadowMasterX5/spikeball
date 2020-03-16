@@ -72,22 +72,24 @@ namespace Platformer.DirectX
             _inputService = _gameEngine.GetService<IInputService>();
         }
 
-        private void Gamepad_GamepadRemoved(object sender, Gamepad e)
+        private async void Gamepad_GamepadRemoved(object sender, Gamepad e)
         {
-            throw new NotImplementedException();
+            await Log("Controller Removed");
         }
 
-        private void Gamepad_GamepadAdded(object sender, Gamepad e)
+        private async void Gamepad_GamepadAdded(object sender, Gamepad e)
         {
-            throw new NotImplementedException();
+            await Log("Controller Added");
         }
 
         private async Task Log(string txt)
         {
-            Task t = Task.Run(async () =>
+            Task t = Task.Run(() =>
             {
                 Debug.WriteLine(DateTime.Now.ToShortDateString() + ": " + txt);
             });
+
+            await t;
         }
 
         /// <summary>
