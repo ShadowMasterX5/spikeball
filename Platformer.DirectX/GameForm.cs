@@ -22,8 +22,8 @@ namespace Platformer.DirectX
     using SharpDX.Windows;
     using Engine;
     using System;
+    using System.Linq;
     using System.Diagnostics;
-    using System.Data;
     using System.Threading.Tasks;
     using Engine.Services;
     using Engine.Input;
@@ -41,6 +41,7 @@ namespace Platformer.DirectX
         private readonly Program _prg;
         public GamepadInput gamepadInput;
         Gamepad gamepad;
+        Timer t = new Timer();
         
         public enum GamepadInput
         {
@@ -67,9 +68,30 @@ namespace Platformer.DirectX
             Gamepad.GamepadAdded += Gamepad_GamepadAdded;
             Gamepad.GamepadRemoved += Gamepad_GamepadRemoved;
 
+            
+
+            t.Tick += T_Tick;
+            t.Interval = 1000;
+            t.Start();
+
             _prg = prg;
             _gameEngine = gameEngine;
             _inputService = _gameEngine.GetService<IInputService>();
+        }
+
+        private async void T_Tick(object sender, EventArgs e)
+        {
+            if (Gamepad.Gamepads.Count > 0)
+            {
+                gamepad = Gamepad.Gamepads.First();
+                var Reading = gamepad.GetCurrentReading();
+                switch (gamepadInput)
+                {
+                    case GamepadInput.A_Button:
+                        await Log("A Has Been Pressed");
+                        break;
+                }
+            }
         }
 
         private async void Gamepad_GamepadRemoved(object sender, Gamepad e)
@@ -86,7 +108,7 @@ namespace Platformer.DirectX
         {
             Task t = Task.Run(() =>
             {
-                Debug.WriteLine(DateTime.Now.ToShortDateString() + ": " + txt);
+                Debug.WriteLine(DateTime.Now.ToShortTimeString() + ": " + txt);
             });
 
             await t;
@@ -145,27 +167,27 @@ namespace Platformer.DirectX
                     break;
             }
 
-            switch (e.KeyCode)
+            switch (gamepadInput)
             {
-                case Keys.Up:
+                case GamepadInput.Up:
                     _inputService.HoldControl(ControllerState.Up);
                     break;
-                case Keys.Down:
+                case GamepadInput.Down:
                     _inputService.HoldControl(ControllerState.Down);
                     break;
-                case Keys.Left:
+                case GamepadInput.Left:
                     _inputService.HoldControl(ControllerState.Left);
                     break;
-                case Keys.Right:
+                case GamepadInput.Right:
                     _inputService.HoldControl(ControllerState.Right);
                     break;
-                case Keys.Z:
+                case GamepadInput.A_Button:
                     _inputService.HoldControl(ControllerState.Jump);
                     break;
-                case Keys.P:
+                case GamepadInput.Menu_Button:
                     _gameEngine.Paused = !_gameEngine.Paused;
                     break;
-                case Keys.Q:
+                case GamepadInput.R_Button:
                     _gameEngine.Step(true);
                     break;
             }
@@ -194,6 +216,25 @@ namespace Platformer.DirectX
                     _inputService.ReleaseControl(ControllerState.Right);
                     break;
                 case Keys.Z:
+                    _inputService.ReleaseControl(ControllerState.Jump);
+                    break;
+            }
+
+            switch (gamepadInput)
+            {
+                case GamepadInput.Up:
+                    _inputService.ReleaseControl(ControllerState.Up);
+                    break;
+                case GamepadInput.Down:
+                    _inputService.ReleaseControl(ControllerState.Down);
+                    break;
+                case GamepadInput.Left:
+                    _inputService.ReleaseControl(ControllerState.Left);
+                    break;
+                case GamepadInput.Right:
+                    _inputService.ReleaseControl(ControllerState.Right);
+                    break;
+                case GamepadInput.A_Button:
                     _inputService.ReleaseControl(ControllerState.Jump);
                     break;
             }
