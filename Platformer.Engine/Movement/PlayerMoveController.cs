@@ -54,7 +54,7 @@ namespace Platformer.Engine.Movement
         protected double _gravity;
         protected bool _controlsEnabled, _allowJump;
 
-        private bool _falling, _pushing, _jumping, _rolling, _turning;
+        private bool _falling, _pushing, _jumping, _rolling, _turning, _lookingUp;
 
         private ControllerState _controlState;
         private ControllerState _prevControlState;
@@ -108,6 +108,7 @@ namespace Platformer.Engine.Movement
             _jumping = false;
             _pushing = false;
             _turning = false;
+			_lookingUp = false;
             _allowJump = true;
             _controlsEnabled = true;
 
@@ -193,6 +194,11 @@ namespace Platformer.Engine.Movement
         /// Gets a value indicating whether the player is pushing.
         /// </summary>
         public bool Pushing => _pushing;
+		
+		/// <summary>
+        /// Gets a value indicating whether the player is looking up.
+        /// </summary>
+        public bool LookingUp => _lookingUp;
 
         /// <summary>
         /// Gets or sets the ground speed of the player.
@@ -289,6 +295,25 @@ namespace Platformer.Engine.Movement
 
             _rolling = true;
             _player.SetBoundingBox(Player.RollingBox);
+        }
+		
+		/// <summary>
+        /// Start the player rolling.
+        /// </summary>
+        public void Looking_Up()
+        {
+            if (_falling || _lookingUp)
+            {
+                return;
+            }
+
+            if (Math.Abs(_gsp) != 1.03125)
+            {
+                // too slow to roll
+                return;
+            }
+
+            _lookingUp = true;
         }
 
         /// <summary>
