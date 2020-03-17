@@ -54,6 +54,7 @@ namespace Platformer.DirectX
         }
         Gamepad gamepad;
         Timer t = new Timer();
+        Timer tr = new Timer();
         
         public enum GamepadInput
         {
@@ -86,8 +87,12 @@ namespace Platformer.DirectX
             }*/
 
             t.Tick += T_Tick;
-            t.Interval = 1000;
+            t.Interval = 1;
             t.Start();
+
+            tr.Tick += TR_Tick;
+            tr.Interval = 1;
+            tr.Start();
 
             _prg = prg;
             _gameEngine = gameEngine;
@@ -106,9 +111,44 @@ namespace Platformer.DirectX
                         await Log("A Has Been Pressed");
                         _inputService.HoldControl(ControllerState.Jump);
                         break;
+                }
+
+                switch (Reading.LeftThumbstickY)
+                {
+                    case +1.0:
+                        await Log("LeftThumbstick Up Has Been Pressed");
+                        _inputService.HoldControl(ControllerState.Up);
+                        break;
+                    case -1.0:
+                        await Log("LeftThumbstick Down Has Been Pressed");
+                        _inputService.HoldControl(ControllerState.Down);
+                        break;
+                }
+            }
+        }
+
+        private async void TR_Tick(object sender, EventArgs e)
+        {
+            if (Gamepad.Gamepads.Count > 0)
+            {
+                gamepad = Gamepad.Gamepads.First();
+                var Reading = gamepad.GetCurrentReading();
+                switch (Reading.Buttons)
+                {
                     case GamepadButtons.None:
-                        await Log("A Has Been Released");
                         _inputService.ReleaseControl(ControllerState.Jump);
+                        break;
+                }
+
+                switch (Reading.LeftThumbstickY)
+                {
+                    case +1.0:
+                        await Log("LeftThumbstick Up Has Been Released");
+                        _inputService.ReleaseControl(ControllerState.Up);
+                        break;
+                    case -1.0:
+                        await Log("LeftThumbstick Down Has Been Released");
+                        _inputService.ReleaseControl(ControllerState.Down);
                         break;
                 }
             }
