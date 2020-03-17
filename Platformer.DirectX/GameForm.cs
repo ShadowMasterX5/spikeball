@@ -107,31 +107,31 @@ namespace Platformer.DirectX
                 var Reading = gamepad.GetCurrentReading();
                 switch (Reading.Buttons)
                 {
-                    case GamepadButtons.X:
+                    case GamepadButtons.RightShoulder:
                         await Log("X Has Been Pressed");
                         _inputService.HoldControl(ControllerState.Jump);
                         break;
                 }
 
-                if (Reading.LeftThumbstickX == -1.0f)
+                if (Reading.LeftThumbstickX <= -0.5f)
                 {
                     await Log("LeftThumbstick Left Has Been Pressed");
                     _inputService.HoldControl(ControllerState.Left);
                 }
 
-                if (Reading.LeftThumbstickX == 1.0f)
+                if (Reading.LeftThumbstickX >= 0.5f)
                 {
                     await Log("LeftThumbstick Right Has Been Pressed");
                     _inputService.HoldControl(ControllerState.Right);
                 }
 
-                if (Reading.LeftThumbstickY == 1.0f)
+                if (Reading.LeftThumbstickY >= 0.5f)
                 {
                         await Log("LeftThumbstick Up Has Been Pressed");
                         _inputService.HoldControl(ControllerState.Up);
                 }
 
-                if (Reading.LeftThumbstickY == -1.0f)
+                if (Reading.LeftThumbstickY <= -0.5f)
                 {
                     await Log("LeftThumbstick Down Has Been Pressed");
                     _inputService.HoldControl(ControllerState.Down);
@@ -152,22 +152,22 @@ namespace Platformer.DirectX
                         break;
                 }
 
-                if (Reading.LeftThumbstickX > -1.0f)
+                if (Reading.LeftThumbstickX > -0.5f)
                 {
                     _inputService.ReleaseControl(ControllerState.Left);
                 }
 
-                if (Reading.LeftThumbstickX < 1.0f)
+                if (Reading.LeftThumbstickX < 0.5f)
                 {
                     _inputService.ReleaseControl(ControllerState.Right);
                 }
 
-                if (Reading.LeftThumbstickY < 1.0f)
+                if (Reading.LeftThumbstickY < 0.5f)
                 {
                     _inputService.ReleaseControl(ControllerState.Up);
                 }
 
-                if (Reading.LeftThumbstickY > -1.0f)
+                if (Reading.LeftThumbstickY > -0.5f)
                 {
                     _inputService.ReleaseControl(ControllerState.Down);
                 }
