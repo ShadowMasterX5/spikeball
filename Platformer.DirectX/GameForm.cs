@@ -50,7 +50,7 @@ namespace Platformer.DirectX
             double rightStickY; // returns a value between -1.0 and +1.0
             double leftTrigger;  // returns a value between 0.0 and 1.0
             double rightTrigger; // returns a value between 0.0 and 1.0
-            
+            internal GamepadButtons Buttons;
         }
         Gamepad gamepad;
         Timer t = new Timer();
@@ -82,7 +82,7 @@ namespace Platformer.DirectX
 
             if (GamepadButtons.A == (reading.Buttons & GamepadButtons.A))
             {
-                // button A is pressed
+                gamepadInput = GamepadInput.A_Button;
             }
 
             t.Tick += T_Tick;
