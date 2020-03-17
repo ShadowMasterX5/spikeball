@@ -65,6 +65,8 @@ namespace Platformer.Engine.Movement
         private BalanceState _balanceState;
         private BrakeState _brakeState;
 
+        private SonicCamera sonicCamera;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerMoveController" /> class.
         /// </summary>
@@ -302,10 +304,10 @@ namespace Platformer.Engine.Movement
         /// </summary>
         public void Looking_Up()
         {
-            if (_falling || _lookingUp)
-            {
-                return;
-            }
+            //if (_falling || _lookingUp)
+            //{
+              //  return;
+            //}
 
             if (Math.Abs(_gsp) != 1.03125)
             {
@@ -314,6 +316,8 @@ namespace Platformer.Engine.Movement
             }
 
             _lookingUp = true;
+
+            sonicCamera.Position = new Point(sonicCamera.Position.X + sonicCamera.xDelta, sonicCamera.Position.Y + sonicCamera.yDelta+1);
         }
 
         /// <summary>
