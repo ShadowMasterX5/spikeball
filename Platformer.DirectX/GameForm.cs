@@ -107,8 +107,8 @@ namespace Platformer.DirectX
                 var Reading = gamepad.GetCurrentReading();
                 switch (Reading.Buttons)
                 {
-                    case GamepadButtons.A:
-                        await Log("A Has Been Pressed");
+                    case GamepadButtons.X:
+                        await Log("X Has Been Pressed");
                         _inputService.HoldControl(ControllerState.Jump);
                         break;
                 }
