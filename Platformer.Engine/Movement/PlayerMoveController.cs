@@ -475,6 +475,11 @@ namespace Platformer.Engine.Movement
                 Roll();
             }
 
+            if ((_controlState & ControllerState.Up) > ControllerState.None)
+            {
+                Looking_Up();
+            }
+
             // impulse position
             base.Move();
 
