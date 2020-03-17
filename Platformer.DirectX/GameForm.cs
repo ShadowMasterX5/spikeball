@@ -113,16 +113,28 @@ namespace Platformer.DirectX
                         break;
                 }
 
-                switch (Reading.LeftThumbstickY)
+                if (Reading.LeftThumbstickX == -1.0f)
                 {
-                    case +1.0:
+                    await Log("LeftThumbstick Left Has Been Pressed");
+                    _inputService.HoldControl(ControllerState.Left);
+                }
+
+                if (Reading.LeftThumbstickX == 1.0f)
+                {
+                    await Log("LeftThumbstick Right Has Been Pressed");
+                    _inputService.HoldControl(ControllerState.Right);
+                }
+
+                if (Reading.LeftThumbstickY == 1.0f)
+                {
                         await Log("LeftThumbstick Up Has Been Pressed");
                         _inputService.HoldControl(ControllerState.Up);
-                        break;
-                    case -1.0:
-                        await Log("LeftThumbstick Down Has Been Pressed");
-                        _inputService.HoldControl(ControllerState.Down);
-                        break;
+                }
+
+                if (Reading.LeftThumbstickY == -1.0f)
+                {
+                    await Log("LeftThumbstick Down Has Been Pressed");
+                    _inputService.HoldControl(ControllerState.Down);
                 }
             }
         }
@@ -140,16 +152,24 @@ namespace Platformer.DirectX
                         break;
                 }
 
-                switch (Reading.LeftThumbstickY)
+                if (Reading.LeftThumbstickX > -1.0f)
                 {
-                    case +1.0:
-                        await Log("LeftThumbstick Up Has Been Released");
-                        _inputService.ReleaseControl(ControllerState.Up);
-                        break;
-                    case -1.0:
-                        await Log("LeftThumbstick Down Has Been Released");
-                        _inputService.ReleaseControl(ControllerState.Down);
-                        break;
+                    _inputService.ReleaseControl(ControllerState.Left);
+                }
+
+                if (Reading.LeftThumbstickX < 1.0f)
+                {
+                    _inputService.ReleaseControl(ControllerState.Right);
+                }
+
+                if (Reading.LeftThumbstickY < 1.0f)
+                {
+                    _inputService.ReleaseControl(ControllerState.Up);
+                }
+
+                if (Reading.LeftThumbstickY > -1.0f)
+                {
+                    _inputService.ReleaseControl(ControllerState.Down);
                 }
             }
         }
