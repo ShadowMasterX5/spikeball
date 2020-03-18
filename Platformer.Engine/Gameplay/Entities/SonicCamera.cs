@@ -29,11 +29,11 @@ namespace Platformer.Engine.Gameplay.Entities
     [GameEntityDefinition("sonic_camera")]
     public class SonicCamera : Camera
     {
-        private const double LeftBorder = 8.0;
-        private const double RightBorder = 8.0;
+        private double LeftBorder = 8.0;
+        private double RightBorder = 8.0;
 
-        private const double TopAirBorder = 32;
-        private const double BottomAirBorder = 32;
+        private double TopAirBorder = 32;
+        private double BottomAirBorder = 32;
 
         private const double CameraFastSpeed = 16.0;
         private const double CameraSlowSpeed = 6.0;
@@ -115,32 +115,30 @@ namespace Platformer.Engine.Gameplay.Entities
             }
             else
             {
-                var yOrigin = _followPlayer.Position.Y + (_followPlayer.Size.Y / 2.0);
-                if (yOrigin != Position.Y)
-                {
-                    var diff = yOrigin - Position.Y;
-                    var maxSpeed = Math.Abs(_followPlayer.MoveController.VerticalSpeed) > 6.0 ? CameraFastSpeed : CameraSlowSpeed;
+                    var yOrigin = _followPlayer.Position.Y + (_followPlayer.Size.Y / 2.0);
+                    if (yOrigin != Position.Y)
+                    {
+                        var diff = yOrigin - Position.Y;
+                        var maxSpeed = Math.Abs(_followPlayer.MoveController.VerticalSpeed) > 6.0 ? CameraFastSpeed : CameraSlowSpeed;
 
-                    yDelta = Math.Min(Math.Abs(diff), maxSpeed);
-                    yDelta *= Math.Sign(diff);
-                }
+                        yDelta = Math.Min(Math.Abs(diff), maxSpeed);
+                        yDelta *= Math.Sign(diff);
+                    }
+            }
+
+            if (!moveController.LookingUp)
+            {
+                Position = new Point(Position.X + xDelta, Position.Y + yDelta);
             }
 
             if (moveController.LookingUp)
             {
-                var yOrigin = _followPlayer.Position.Y + (_followPlayer.Size.Y / 2.0);
-                if (yOrigin != Position.Y)
-                {
-                    var diff = yOrigin - Position.Y;
-                    var maxSpeed = Math.Abs(_followPlayer.MoveController.VerticalSpeed) > 6.0 ? CameraFastSpeed : CameraSlowSpeed;
-
-                    yDelta = Math.Min(Math.Abs(diff), maxSpeed);
-                    yDelta *= Math.Sign(diff);
-                }
+                //Position = new Point(Position.X + xDelta, Position.Y + yDelta);
+                TopAirBorder += 2;
+                BottomAirBorder += 2;
+                yDelta += 2;
+                _followPlayer.Position = new Point(_followPlayer.Position.X, _followPlayer.Position.Y + 2);
             }
-
-            Position = new Point(Position.X + xDelta, Position.Y + yDelta);
-            
         }
     }
 }
