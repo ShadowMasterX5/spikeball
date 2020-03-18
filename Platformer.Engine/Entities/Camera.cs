@@ -55,20 +55,20 @@ namespace Platformer.Engine.Entities
         protected override void OnPostStep()
         {
             // just stick to the entity we are following
-            if (Follow != null /*&& !moveController.LookingUp*/)
+            if (Follow != null && !moveController.LookingUp)
             {
                 Position = Follow.Position;
             }
 
-            /*if (Follow != null && moveController.LookingUp)
+            if (Follow != null && moveController.LookingUp)
             {
                 Follow = null;
             }
 
             if (Follow == null && moveController.LookingUp)
             {
-                Position = new Point(Follow.Position.X, Follow.Position.Y + 2);
-            }*/
+                Position = new Point(Follow.Position.X, Follow.Position.Y + 9);
+            }
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Platformer.Engine.Entities
 
             if (Follow == null && moveController.LookingUp)
             {
-                Position = new Point(Follow.Position.X, Follow.Position.Y + 2);
+                Position = new Point(Follow.Position.X, Follow.Position.Y + 9);
             }
         }
     }
