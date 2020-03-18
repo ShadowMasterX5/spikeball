@@ -21,7 +21,6 @@ namespace Platformer.Engine.Gameplay.Entities
     using System;
     using Services;
     using Engine.Entities;
-    using Engine.Movement;
 
     /// <summary>
     /// Class which implements a game camera which roughly emulates the Genesis Sonic games.
@@ -43,7 +42,6 @@ namespace Platformer.Engine.Gameplay.Entities
 
         public double xDelta = 0.0;
         public double yDelta = 0.0;
-        PlayerMoveController moveController;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SonicCamera" /> class.
@@ -114,28 +112,18 @@ namespace Platformer.Engine.Gameplay.Entities
             }
             else
             {
-                    var yOrigin = _followPlayer.Position.Y + (_followPlayer.Size.Y / 2.0);
-                    if (yOrigin != Position.Y)
-                    {
-                        var diff = yOrigin - Position.Y;
-                        var maxSpeed = Math.Abs(_followPlayer.MoveController.VerticalSpeed) > 6.0 ? CameraFastSpeed : CameraSlowSpeed;
+                var yOrigin = _followPlayer.Position.Y + (_followPlayer.Size.Y / 2.0);
+                if (yOrigin != Position.Y)
+                {
+                    var diff = yOrigin - Position.Y;
+                    var maxSpeed = Math.Abs(_followPlayer.MoveController.VerticalSpeed) > 6.0 ? CameraFastSpeed : CameraSlowSpeed;
 
-                        yDelta = Math.Min(Math.Abs(diff), maxSpeed);
-                        yDelta *= Math.Sign(diff);
-                    }
+                    yDelta = Math.Min(Math.Abs(diff), maxSpeed);
+                    yDelta *= Math.Sign(diff);
+                }
             }
 
-            if (!moveController.LookingUp)
-            {
-                Position = new Point(Position.X + xDelta, Position.Y + yDelta);
-            }
-
-            if (moveController.LookingUp)
-            {
-                Position = new Point(Position.X + xDelta, Position.Y + yDelta+8);
-                TopAirBorder = 64;
-                BottomAirBorder = 64;
-            }
+            Position = new Point(Position.X + xDelta, Position.Y + yDelta);
         }
     }
 }
