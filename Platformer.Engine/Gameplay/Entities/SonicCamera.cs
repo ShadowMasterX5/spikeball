@@ -126,10 +126,21 @@ namespace Platformer.Engine.Gameplay.Entities
                 }
             }
 
-            if (!moveController.LookingUp)
+            if (moveController.LookingUp)
             {
-                Position = new Point(Position.X + xDelta, Position.Y + yDelta);
+                var yOrigin = _followPlayer.Position.Y + (_followPlayer.Size.Y / 2.0);
+                if (yOrigin != Position.Y)
+                {
+                    var diff = yOrigin - Position.Y;
+                    var maxSpeed = Math.Abs(_followPlayer.MoveController.VerticalSpeed) > 6.0 ? CameraFastSpeed : CameraSlowSpeed;
+
+                    yDelta = Math.Min(Math.Abs(diff), maxSpeed);
+                    yDelta *= Math.Sign(diff);
+                }
             }
+
+            Position = new Point(Position.X + xDelta, Position.Y + yDelta);
+            
         }
     }
 }

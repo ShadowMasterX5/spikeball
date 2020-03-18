@@ -312,12 +312,12 @@ namespace Platformer.Engine.Movement
             if (Math.Abs(_gsp) != 1.03125)
             {
                 // too slow to roll
-                return;
+                //return;
             }
 
             _lookingUp = true;
 
-            sonicCamera.Position = new Point(sonicCamera.Position.X + sonicCamera.xDelta, sonicCamera.Position.Y + sonicCamera.yDelta+1);
+            
         }
 
         /// <summary>
