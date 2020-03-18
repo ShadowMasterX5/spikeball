@@ -133,6 +133,8 @@ namespace Platformer.Engine.Gameplay.Entities
             if (moveController.LookingUp)
             {
                 Position = new Point(Position.X + xDelta, Position.Y + yDelta+8);
+                TopAirBorder = 64;
+                BottomAirBorder = 64;
             }
         }
     }
