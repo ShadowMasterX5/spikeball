@@ -19,8 +19,6 @@
 namespace Platformer.Engine.Entities
 {
 
-    using Engine.Movement;
-
     /// <summary>
     /// Class which implements a basic game camera.
     /// </summary>
@@ -47,27 +45,15 @@ namespace Platformer.Engine.Entities
             }
         }
 
-        PlayerMoveController moveController;
-
         /// <summary>
         /// Called after each frame.
         /// </summary>
         protected override void OnPostStep()
         {
             // just stick to the entity we are following
-            if (Follow != null && !moveController.LookingUp)
+            if (Follow != null)
             {
                 Position = Follow.Position;
-            }
-
-            if (Follow != null && moveController.LookingUp)
-            {
-                Follow = null;
-            }
-
-            if (Follow == null && moveController.LookingUp)
-            {
-                Position = new Point(Follow.Position.X, Follow.Position.Y + 9);
             }
         }
 
@@ -76,19 +62,9 @@ namespace Platformer.Engine.Entities
         /// </summary>
         protected void Center()
         {
-            if (Follow != null && !moveController.LookingUp)
+            if (Follow != null)
             {
                 Position = Follow.Position;
-            }
-
-            if (Follow != null && moveController.LookingUp)
-            {
-                Follow = null;
-            }
-
-            if (Follow == null && moveController.LookingUp)
-            {
-                Position = new Point(Follow.Position.X, Follow.Position.Y + 9);
             }
         }
     }
