@@ -133,11 +133,7 @@ namespace Platformer.Engine.Gameplay.Entities
 
             if (moveController.LookingUp)
             {
-                //Position = new Point(Position.X + xDelta, Position.Y + yDelta);
-                TopAirBorder += 2;
-                BottomAirBorder += 2;
-                yDelta += 2;
-                _followPlayer.Position = new Point(_followPlayer.Position.X, _followPlayer.Position.Y + 2);
+                Position = new Point(Position.X + xDelta, Position.Y + 2);
             }
         }
     }
