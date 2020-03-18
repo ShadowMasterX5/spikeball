@@ -21,7 +21,7 @@ namespace Platformer.Engine.Gameplay.Entities
     using System;
     using Services;
     using Engine.Entities;
-    using Engine.Movement;
+    
 
     /// <summary>
     /// Class which implements a game camera which roughly emulates the Genesis Sonic games.
@@ -43,8 +43,6 @@ namespace Platformer.Engine.Gameplay.Entities
 
         public double xDelta = 0.0;
         public double yDelta = 0.0;
-
-        PlayerMoveController moveController;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SonicCamera" /> class.
@@ -126,15 +124,7 @@ namespace Platformer.Engine.Gameplay.Entities
                     }
             }
 
-            if (!moveController.LookingUp)
-            {
                 Position = new Point(Position.X + xDelta, Position.Y + yDelta);
-            }
-
-            if (moveController.LookingUp)
-            {
-                Position = new Point(Position.X + xDelta, Position.Y + 2);
-            }
         }
     }
 }
